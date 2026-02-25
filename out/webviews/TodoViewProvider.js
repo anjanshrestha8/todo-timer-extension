@@ -267,6 +267,11 @@ class TodoViewProvider {
     margin-bottom: 12px; /* Maintain spacing between tasks */
     cursor: move;
     word-break: break-word;
+    transition: opacity 0.2s;
+  }
+
+  .todo-item.dragging {
+    opacity: 0.5;
   }
 
   .drag-handle {
@@ -276,6 +281,10 @@ class TodoViewProvider {
     flex-shrink: 0;
     display: flex;
     align-items: center;
+  }
+
+  .drag-handle:active {
+    cursor: grabbing;
   }
 
   .todo-text {
@@ -492,6 +501,64 @@ addBtn.addEventListener('click', () => {
 todoInput.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') addBtn.click();
 });
+
+// ==========================================
+// DRAG AND DROP FUNCTIONALITY
+// ==========================================
+let draggedElement = null;
+
+todoList.addEventListener('dragstart', (e) => {
+  if (e.target.classList.contains('todo-item')) {
+    draggedElement = e.target;
+    e.target.classList.add('dragging');
+  }
+});
+
+todoList.addEventListener('dragend', (e) => {
+  if (e.target.classList.contains('todo-item')) {
+    e.target.classList.remove('dragging');
+    draggedElement = null;
+  }
+});
+
+todoList.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  const afterElement = getDragAfterElement(todoList, e.clientY);
+  if (draggedElement) {
+    if (afterElement == null) {
+      todoList.appendChild(draggedElement);
+    } else {
+      todoList.insertBefore(draggedElement, afterElement);
+    }
+  }
+});
+
+todoList.addEventListener('drop', (e) => {
+  e.preventDefault();
+  // Get the new order of todos based on DOM
+  const todoItems = Array.from(todoList.querySelectorAll('.todo-item'));
+  const reorderedTodos = todoItems.map(item => {
+    const id = item.dataset.id;
+    return todos.find(t => t.id === id);
+  }).filter(Boolean);
+  
+  vscode.postMessage({ type: 'reorderTodos', todos: reorderedTodos });
+});
+
+function getDragAfterElement(container, y) {
+  const draggableElements = [...container.querySelectorAll('.todo-item:not(.dragging)')];
+  
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+    
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
+    }
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
 </script>
 </body>
 </html>`;
