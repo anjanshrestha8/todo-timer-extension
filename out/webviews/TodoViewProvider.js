@@ -148,8 +148,9 @@ class TodoViewProvider {
             id: Date.now().toString(), // Simple unique ID using timestamp
             text: text,
             completed: false,
+            createdAt: new Date().toISOString(), // Store creation date
         };
-        todos.push(newTodo);
+        todos.unshift(newTodo); // Add to beginning of array (top of list)
         this._saveTodos(todos);
     }
     /**
@@ -179,7 +180,12 @@ class TodoViewProvider {
         const todo = todos.find((t) => t.id === id);
         if (todo) {
             todo.completed = !todo.completed;
-            this._saveTodos(todos);
+            // Sort: incomplete tasks first, then completed tasks
+            const sortedTodos = [
+                ...todos.filter((t) => !t.completed),
+                ...todos.filter((t) => t.completed),
+            ];
+            this._saveTodos(sortedTodos);
         }
     }
     /**
@@ -267,11 +273,31 @@ class TodoViewProvider {
     margin-bottom: 12px; /* Maintain spacing between tasks */
     cursor: move;
     word-break: break-word;
-    transition: opacity 0.2s;
+    transition: opacity 0.2s, transform 0.4s ease-out, max-height 0.4s ease-out;
+    transform-origin: top;
   }
 
   .todo-item.dragging {
     opacity: 0.5;
+  }
+
+  .todo-item.moving-down {
+    animation: slideDown 0.5s ease-out;
+  }
+
+  @keyframes slideDown {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    50% {
+      transform: translateY(-10px);
+      opacity: 0.7;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
 
   .drag-handle {
@@ -288,12 +314,19 @@ class TodoViewProvider {
   }
 
   .todo-text {
-    font-size: 16px; /* Increased font size for tasks */
+    font-size: 14px; /* Reduced font size for tasks */
   }
 
   .todo-text.completed { 
     text-decoration: line-through; 
     opacity: 0.6; 
+  }
+
+  .todo-date {
+    font-size: 10px;
+    color: var(--vscode-descriptionForeground);
+    opacity: 0.7;
+    margin-top: 2px;
   }
 
   .todo-content {
@@ -345,7 +378,7 @@ class TodoViewProvider {
     padding: 6px;
     box-sizing: border-box;
     font-family: inherit;
-    font-size: 18px; /* Match display font size */
+    font-size: 14px; /* Match display font size */
     border: 1px solid var(--vscode-input-border);
     border-radius: 4px;
   }
@@ -381,6 +414,7 @@ const todoList = document.getElementById('todo-list');
 
 let todos = [];
 let editingId = null;
+let lastToggledId = null;
 
 vscode.postMessage({ type: 'getTodos' });
 
@@ -388,11 +422,12 @@ window.addEventListener('message', (event) => {
   const message = event.data;
   if (message.type === 'todosData') {
     todos = message.todos;
-    renderTodos(todos);
+    renderTodos(todos, lastToggledId);
+    lastToggledId = null; // Reset after rendering
   }
 });
 
-function renderTodos(todosToRender) {
+function renderTodos(todosToRender, animateCompletedId = null) {
   todoList.innerHTML = '';
   if (todosToRender.length === 0) {
     todoList.innerHTML = '<div class="empty-state">No todos yet</div>';
@@ -405,6 +440,15 @@ function renderTodos(todosToRender) {
     li.draggable = true;
     li.dataset.id = todo.id;
 
+    // Add animation class if this todo was just completed
+    if (animateCompletedId === todo.id && todo.completed) {
+      li.classList.add('moving-down');
+      // Remove animation class after animation completes
+      setTimeout(() => {
+        li.classList.remove('moving-down');
+      }, 500);
+    }
+
     const dragHandle = document.createElement('span');
     dragHandle.innerHTML = '<i class="codicon codicon-kebab-vertical"></i>';
     dragHandle.className = 'drag-handle';
@@ -413,6 +457,8 @@ function renderTodos(todosToRender) {
     checkbox.type = 'checkbox';
     checkbox.checked = todo.completed;
     checkbox.addEventListener('change', () => {
+      // Store the ID for animation
+      lastToggledId = todo.id;
       vscode.postMessage({ type: 'toggleTodo', id: todo.id });
     });
 
@@ -460,6 +506,12 @@ function renderTodos(todosToRender) {
       span.style.whiteSpace = 'pre-wrap';
       span.style.wordBreak = 'break-word';
 
+      // Add creation date
+      const dateSpan = document.createElement('div');
+      dateSpan.className = 'todo-date';
+      const createdDate = todo.createdAt ? new Date(todo.createdAt).toISOString().split('T')[0] : '';
+      dateSpan.textContent = createdDate;
+
       const actions = document.createElement('div');
       actions.className = 'todo-actions';
 
@@ -484,6 +536,7 @@ function renderTodos(todosToRender) {
       actions.appendChild(deleteBtn);
 
       todoContent.appendChild(span);
+      todoContent.appendChild(dateSpan);
       li.append(dragHandle, checkbox, todoContent, actions);
     }
 
