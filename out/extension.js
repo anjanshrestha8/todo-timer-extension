@@ -43,7 +43,7 @@ const TodoViewProvider_1 = require("./webviews/TodoViewProvider");
  * Activation happens when VS Code starts OR when user runs a command
  */
 function activate(context) {
-    console.log('Timer & Todo Extension is now active!');
+    console.log("Timer & Todo Extension is now active!");
     // ============================================
     // SECTION 1: TIMER SETUP
     // ============================================
@@ -52,13 +52,13 @@ function activate(context) {
     const timerProvider = new TimerViewProvider_1.TimerViewProvider(context.extensionUri);
     // Register the Timer webview
     // This tells VS Code: "Hey, I have a custom view panel called 'timer-todo.timer'"
-    context.subscriptions.push(vscode.window.registerWebviewViewProvider('timer-todo.timer', // Unique ID for this webview
+    context.subscriptions.push(vscode.window.registerWebviewViewProvider("timer-todo.timer", // Unique ID for this webview
     timerProvider));
     // Register the "Open Timer" command
     // When user clicks this command, it opens the Timer panel
-    const openTimerCommand = vscode.commands.registerCommand('timer-todo.openTimer', () => {
+    const openTimerCommand = vscode.commands.registerCommand("timer-todo.openTimer", () => {
         // Execute the command to focus on the timer view
-        vscode.commands.executeCommand('timer-todo.timer.focus');
+        vscode.commands.executeCommand("timer-todo.timer.focus");
     });
     context.subscriptions.push(openTimerCommand);
     // ============================================
@@ -68,23 +68,23 @@ function activate(context) {
     // This is a separate "Todo Manager" - no connection to Timer
     const todoProvider = new TodoViewProvider_1.TodoViewProvider(context.extensionUri, context);
     // Register the Todo webview
-    context.subscriptions.push(vscode.window.registerWebviewViewProvider('timer-todo.todo', // Different unique ID
+    context.subscriptions.push(vscode.window.registerWebviewViewProvider("timer-todo.todo", // Different unique ID
     todoProvider));
     // Register the "Open Todo" command
-    const openTodoCommand = vscode.commands.registerCommand('timer-todo.openTodo', () => {
-        vscode.commands.executeCommand('timer-todo.todo.focus');
+    const openTodoCommand = vscode.commands.registerCommand("timer-todo.openTodo", () => {
+        vscode.commands.executeCommand("timer-todo.todo.focus");
     });
     context.subscriptions.push(openTodoCommand);
     // ============================================
     // SUCCESS MESSAGE
     // ============================================
-    vscode.window.showInformationMessage('Timer & Todo Extension loaded successfully!');
+    vscode.window.showInformationMessage("Timer & Todo Extension loaded successfully!");
 }
 /**
  * This function is called when your extension is deactivated
  * Clean up resources here if needed
  */
 function deactivate() {
-    console.log('Timer & Todo Extension is now deactivated');
+    console.log("Timer & Todo Extension is now deactivated");
 }
 //# sourceMappingURL=extension.js.map
