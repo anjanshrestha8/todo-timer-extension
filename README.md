@@ -11,11 +11,11 @@ A VS Code extension with a timer and a categorized todo list.
 
 ### Todo List
 - Add, edit, complete, and delete todos
-- **Categories** — organize todos into Personal, Work, or any custom category
-- **Category tab bar** — filter your list by category with one click
-- **Color-coded badges** — each todo shows which category it belongs to
-- **Drag-and-drop reordering** — prioritize tasks by dragging them
-- **Export & Import** — save todos to a JSON file (per category or all at once) and import them back
+- **Categories** — todos are grouped into sections (Personal, Work, or any custom category)
+- **Color-coded cards** — each todo card is tinted with its category color for instant visual separation
+- **Rename & delete categories** — hover over a category header to reveal edit and delete actions
+- **Drag-and-drop reordering** — prioritize tasks by dragging them within a section
+- **Export & Import** — save todos to a JSON file and import them back
 - Persistent storage — todos and categories survive VS Code restarts
 
 ## How to Use
@@ -38,28 +38,31 @@ A VS Code extension with a timer and a categorized todo list.
 3. Click **Add** or press `Enter`
 
 #### Managing categories
-- The tab bar at the top shows **All**, **Personal**, **Work**, and any custom categories you create
-- Click a tab to filter todos by that category
-- Click **+ New** to create a custom category — you'll be prompted for a name and a color
-- Right-click a custom category tab to delete it (its todos move to Personal)
+- Todos are displayed as **grouped sections** — one section per category
+- Click **Category** in the top-right header to create a new category (you'll pick a name and color)
+- **Hover over a category header** to reveal two action buttons:
+  - ✏️ **Rename** — update the category name and/or color (available for all categories)
+  - 🗑️ **Delete** — remove the category; any todos inside will be moved to the next available category. You must always have at least one category
 
-#### Other actions
+#### Todo actions
 | Action   | How |
 |----------|-----|
-| Complete | Check the checkbox next to a todo |
-| Edit     | Click the ✏️ icon — you can change both the text and the category |
-| Delete   | Click the 🗑️ icon |
-| Reorder  | Drag the ⋮ handle — top of the list = highest priority |
+| Complete | Check the checkbox — completed todos move to the bottom |
+| Edit     | Hover the todo and click ✏️ — you can change the text and reassign the category |
+| Delete   | Hover the todo and click 🗑️ |
+| Reorder  | Drag the ⋮ handle — top of the section = highest priority |
+
+> The creation date of each todo is shown in the top-right corner of its card.
 
 ### Exporting & Importing
 
 **From the todo panel:**
-- Click the **Export** button in the top-right corner of the Todo panel to export the currently visible category (or all todos if "All" is selected)
+- Click **Export** in the header to export all todos to a `.json` file
 
 **From the Command Palette** (`Cmd+Shift+P` / `Ctrl+Shift+P`):
 | Command | Description |
 |---------|-------------|
-| `Timer & Todo: Export Todos` | Choose a category and save todos to a `.json` file |
+| `Timer & Todo: Export Todos` | Choose a category (or all) and save to a `.json` file |
 | `Timer & Todo: Import Todos` | Load todos from a previously exported `.json` file (merge or replace) |
 
 ## Development
