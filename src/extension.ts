@@ -63,6 +63,41 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(openTodoCommand);
 
   // ============================================
+  // SECTION 3: EXPORT / IMPORT COMMANDS
+  // ============================================
+
+  // Export todos — lets user pick a category then saves a JSON file
+  const exportTodosCommand = vscode.commands.registerCommand(
+    "timer-todo.exportTodos",
+    async () => {
+      const categories = todoProvider._getCategories();
+      const options = [
+        { label: "All Categories", id: "all" },
+        ...categories.map((c) => ({ label: c.name, id: c.id })),
+      ];
+      const pick = await vscode.window.showQuickPick(
+        options.map((o) => o.label),
+        { placeHolder: "Export which category?" },
+      );
+      if (!pick) {
+        return;
+      }
+      const chosen = options.find((o) => o.label === pick);
+      await todoProvider.exportTodos(chosen?.id);
+    },
+  );
+  context.subscriptions.push(exportTodosCommand);
+
+  // Import todos from a previously exported JSON file
+  const importTodosCommand = vscode.commands.registerCommand(
+    "timer-todo.importTodos",
+    async () => {
+      await todoProvider.importTodos();
+    },
+  );
+  context.subscriptions.push(importTodosCommand);
+
+  // ============================================
   // SUCCESS MESSAGE
   // ============================================
   vscode.window.showInformationMessage(

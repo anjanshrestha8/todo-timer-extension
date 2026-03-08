@@ -20,39 +20,77 @@
       font-family: var(--vscode-font-family);
       color: var(--vscode-foreground);
       background-color: var(--vscode-editor-background);
-      padding: 20px;
+      padding: 12px 16px;
+    }
+
+    /* ── Header ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
     }
 
     h1 {
-      font-size: 22px;
-      margin-bottom: 20px;
+      font-size: 18px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .codicon {
-      font-size: 10px;
+    .header-actions {
+      display: flex;
+      gap: 4px;
     }
 
+    .icon-btn {
+      padding: 4px 6px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--vscode-icon-foreground);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      font-family: inherit;
+    }
+
+    .icon-btn:hover {
+      background-color: var(--vscode-toolbar-hoverBackground);
+    }
+
+    /* ── Add form ── */
     .add-todo-form {
       display: flex;
-      gap: 10px;
-      margin-bottom: 10px;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+
+    .add-todo-row {
+      display: flex;
+      gap: 6px;
     }
 
     #todo-input {
       flex: 1;
-      padding: 8px 12px;
+      padding: 6px 10px;
       background-color: var(--vscode-input-background);
       color: var(--vscode-input-foreground);
       border: 1px solid var(--vscode-input-border);
       border-radius: 4px;
-      font-size: 16px;
+      font-size: 13px;
+      font-family: inherit;
+    }
+
+    #todo-input:focus {
+      outline: 1px solid var(--vscode-focusBorder);
     }
 
     #add-btn {
-      padding: 6px 12px;
+      padding: 6px 10px;
       background-color: var(--vscode-button-background);
       color: var(--vscode-button-foreground);
       border: none;
@@ -61,36 +99,129 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
 
     #add-btn:hover {
       background-color: var(--vscode-button-hoverBackground);
     }
 
-    #todo-list {
+    .cat-select {
+      padding: 4px 8px;
+      background-color: var(--vscode-input-background);
+      color: var(--vscode-input-foreground);
+      border: 1px solid var(--vscode-input-border);
+      border-radius: 4px;
+      font-size: 12px;
+      font-family: inherit;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .cat-select:focus {
+      outline: 1px solid var(--vscode-focusBorder);
+    }
+
+    /* ── Priority hint ── */
+    .priority-info {
+      font-size: 11px;
+      color: var(--vscode-descriptionForeground);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* ── Category section header ── */
+    .cat-section {
+      margin-bottom: 16px;
+    }
+
+    .cat-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 6px;
+      padding: 4px 6px;
+      border-radius: 4px;
+    }
+
+    .cat-section-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .cat-section-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .cat-section-count {
+      font-size: 10px;
+      opacity: 0.6;
+      font-weight: normal;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+
+    .cat-hdr-actions {
+      display: flex;
+      gap: 2px;
+    }
+
+    .cat-hdr-btn {
+      padding: 2px 4px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      color: var(--vscode-icon-foreground);
+      border-radius: 3px;
+      font-size: 10px;
+      opacity: 0.35;
+      transition: opacity 0.15s;
+      font-family: inherit;
+      display: flex;
+      align-items: center;
+    }
+
+    .cat-section-header:hover .cat-hdr-btn {
+      opacity: 0.6;
+    }
+
+    .cat-hdr-btn:hover {
+      background-color: var(--vscode-toolbar-hoverBackground);
+      opacity: 1 !important;
+    }
+
+    /* ── Todo list ── */
+    .cat-todo-list {
       list-style: none;
     }
 
     .todo-item {
       display: flex;
       align-items: center;
-      gap: 8px;
-      /* Increased gap between drag handle, checkbox, and text */
+      gap: 6px;
       padding: 8px 10px;
-      /* Increased padding for bigger text */
-      background-color: var(--vscode-input-background);
-      border: 1px solid var(--vscode-input-border);
-      border-radius: 4px;
-      margin-bottom: 12px;
-      /* Maintain spacing between tasks */
+      border: 1px solid transparent;
+      border-radius: 6px;
+      margin-bottom: 6px;
       cursor: move;
       word-break: break-word;
-      transition: opacity 0.2s, transform 0.4s ease-out, max-height 0.4s ease-out;
-      transform-origin: top;
+      transition: opacity 0.2s, filter 0.2s;
     }
 
     .todo-item.dragging {
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
     .todo-item.moving-down {
@@ -104,7 +235,7 @@
       }
 
       50% {
-        transform: translateY(-10px);
+        transform: translateY(-8px);
         opacity: 0.7;
       }
 
@@ -121,98 +252,117 @@
       flex-shrink: 0;
       display: flex;
       align-items: center;
+      opacity: 0.5;
+    }
+
+    .todo-item:hover .drag-handle {
+      opacity: 1;
     }
 
     .drag-handle:active {
       cursor: grabbing;
     }
 
+    .todo-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
     .todo-text {
-      font-size: 14px;
-      /* Reduced font size for tasks */
+      font-size: 13px;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     .todo-text.completed {
       text-decoration: line-through;
-      opacity: 0.6;
+      opacity: 0.45;
     }
 
     .todo-date {
       font-size: 10px;
       color: var(--vscode-descriptionForeground);
-      opacity: 0.7;
-      margin-top: 2px;
-    }
-
-    .todo-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
+      opacity: 0.6;
     }
 
     .todo-actions {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 2px;
       flex-shrink: 0;
+      opacity: 0;
+      transition: opacity 0.15s;
     }
 
-    .icon-btn {
-      padding: 4px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      color: var(--vscode-icon-foreground);
-      border-radius: 4px;
+    .todo-item:hover .todo-actions {
+      opacity: 1;
     }
 
-    .icon-btn:hover {
-      background-color: var(--vscode-toolbar-hoverBackground);
-    }
-
-    .priority-info {
-      font-size: 12px;
-      color: var(--vscode-descriptionForeground);
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .empty-state {
-      text-align: center;
-      padding: 30px;
-      color: var(--vscode-descriptionForeground);
-    }
-
+    /* ── Edit mode ── */
     textarea.todo-edit-textarea {
       width: 100%;
-      height: 90%;
-      resize: none;
+      resize: vertical;
+      min-height: 60px;
       padding: 6px;
       box-sizing: border-box;
       font-family: inherit;
-      font-size: 14px;
-      /* Match display font size */
+      font-size: 13px;
       border: 1px solid var(--vscode-input-border);
       border-radius: 4px;
+      background-color: var(--vscode-input-background);
+      color: var(--vscode-input-foreground);
+    }
+
+    .edit-cat-select {
+      padding: 3px 6px;
+      background-color: var(--vscode-input-background);
+      color: var(--vscode-input-foreground);
+      border: 1px solid var(--vscode-input-border);
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: inherit;
+    }
+
+    /* ── Empty state ── */
+    .empty-state {
+      text-align: center;
+      padding: 24px;
+      color: var(--vscode-descriptionForeground);
+      font-size: 12px;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>
-    <i class="codicon codicon-checklist"></i>
-    Todo List
-  </h1>
+  <!-- Header -->
+  <div class="header">
+    <h1>
+      <i class="codicon codicon-checklist"></i>
+      Todo List
+    </h1>
+    <div class="header-actions">
+      <button class="icon-btn" id="new-cat-btn" title="Add new category">
+        <i class="codicon codicon-tag"></i> Category
+      </button>
+      <button class="icon-btn" id="export-btn" title="Export todos">
+        <i class="codicon codicon-export"></i> Export
+      </button>
+    </div>
+  </div>
 
+  <!-- Add todo form -->
   <div class="add-todo-form">
-    <input type="text" id="todo-input" placeholder="What needs to be done?" />
-    <button id="add-btn" title="Add Todo">
-      <i class="codicon codicon-add"></i>
-    </button>
+    <div class="add-todo-row">
+      <input type="text" id="todo-input" placeholder="What needs to be done?" />
+      <button id="add-btn" title="Add Todo">
+        <i class="codicon codicon-add"></i>
+      </button>
+    </div>
+    <select class="cat-select" id="todo-category-select"></select>
   </div>
 
   <div class="priority-info">
@@ -220,15 +370,20 @@
     Drag tasks to reorder (top = highest priority)
   </div>
 
-  <ul id="todo-list"></ul>
+  <!-- Grouped todo sections — rendered by JS -->
+  <div id="todo-sections"></div>
 
   <script>
     const vscode = acquireVsCodeApi();
     const todoInput = document.getElementById('todo-input');
     const addBtn = document.getElementById('add-btn');
-    const todoList = document.getElementById('todo-list');
+    const todoSections = document.getElementById('todo-sections');
+    const todoCategorySelect = document.getElementById('todo-category-select');
+    const exportBtn = document.getElementById('export-btn');
+    const newCatBtn = document.getElementById('new-cat-btn');
 
     let todos = [];
+    let categories = [];
     let editingId = null;
     let lastToggledId = null;
 
@@ -238,195 +393,324 @@
       const message = event.data;
       if (message.type === 'todosData') {
         todos = message.todos;
-        renderTodos(todos, lastToggledId);
-        lastToggledId = null; // Reset after rendering
+        categories = message.categories || [];
+        populateCategoryDropdown();
+        renderSections(lastToggledId);
+        lastToggledId = null;
       }
     });
 
-    function renderTodos(todosToRender, animateCompletedId = null) {
-      todoList.innerHTML = '';
-      if (todosToRender.length === 0) {
-        todoList.innerHTML = '<div class="empty-state">No todos yet</div>';
+    // ==========================================
+    // CATEGORY DROPDOWN (add form)
+    // ==========================================
+    function populateCategoryDropdown() {
+      const prev = todoCategorySelect.value;
+      todoCategorySelect.innerHTML = categories.map(cat =>
+        `<option value="${cat.id}">${cat.name}</option>`
+      ).join('');
+      if (prev && categories.find(c => c.id === prev)) {
+        todoCategorySelect.value = prev;
+      }
+    }
+
+    // ==========================================
+    // RENDER — grouped by category
+    // ==========================================
+    function renderSections(animateCompletedId = null) {
+      todoSections.innerHTML = '';
+
+      // Determine which categories have todos
+      const usedCatIds = [...new Set(todos.map(t => t.category))];
+
+      // Order: follow categories array order, then any unknown ids at end
+      const orderedCats = [
+        ...categories.filter(c => usedCatIds.includes(c.id)),
+        // fallback for orphaned category ids not in categories list
+        ...usedCatIds
+          .filter(id => !categories.find(c => c.id === id))
+          .map(id => ({ id, name: id, color: '#888' })),
+      ];
+
+      if (orderedCats.length === 0) {
+        todoSections.innerHTML = '<div class="empty-state">No todos yet — add one above!</div>';
         return;
       }
 
-      todosToRender.forEach((todo) => {
-        const li = document.createElement('li');
-        li.className = 'todo-item';
-        li.draggable = true;
-        li.dataset.id = todo.id;
+      orderedCats.forEach(cat => {
+        const catTodos = todos.filter(t => t.category === cat.id);
+        if (catTodos.length === 0) { return; }
 
-        // Add animation class if this todo was just completed
-        if (animateCompletedId === todo.id && todo.completed) {
-          li.classList.add('moving-down');
-          // Remove animation class after animation completes
-          setTimeout(() => {
-            li.classList.remove('moving-down');
-          }, 500);
-        }
+        // --- section wrapper ---
+        const section = document.createElement('div');
+        section.className = 'cat-section';
+        section.dataset.catId = cat.id;
 
-        const dragHandle = document.createElement('span');
-        dragHandle.innerHTML = '<i class="codicon codicon-kebab-vertical"></i>';
-        dragHandle.className = 'drag-handle';
+        // --- section header ---
+        const header = document.createElement('div');
+        header.className = 'cat-section-header';
+        // Very subtle tint on the header using category color
+        header.style.backgroundColor = hexToRgba(cat.color, 0.12);
 
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = todo.completed;
-        checkbox.addEventListener('change', () => {
-          // Store the ID for animation
-          lastToggledId = todo.id;
-          vscode.postMessage({ type: 'toggleTodo', id: todo.id });
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'cat-section-title';
+        titleSpan.style.color = cat.color;
+        titleSpan.innerHTML =
+          `<span class="cat-section-dot" style="background:${cat.color}"></span>` +
+          `${cat.name} <span class="cat-section-count">${catTodos.length}</span>`;
+
+        const hdrActions = document.createElement('div');
+        hdrActions.className = 'cat-hdr-actions';
+
+        // Rename button (all categories)
+        const renameBtn = document.createElement('button');
+        renameBtn.className = 'cat-hdr-btn';
+        renameBtn.title = `Rename "${cat.name}" category`;
+        renameBtn.innerHTML = '<i class="codicon codicon-edit"></i>';
+        renameBtn.addEventListener('click', () => {
+          vscode.postMessage({ type: 'renameCategory', categoryId: cat.id });
+        });
+        hdrActions.appendChild(renameBtn);
+
+        // Delete button (all categories)
+        const delBtn = document.createElement('button');
+        delBtn.className = 'cat-hdr-btn';
+        delBtn.title = `Delete "${cat.name}" category`;
+        delBtn.innerHTML = '<i class="codicon codicon-trash"></i>';
+        delBtn.addEventListener('click', () => {
+          vscode.postMessage({ type: 'deleteCategory', categoryId: cat.id });
+        });
+        hdrActions.appendChild(delBtn);
+
+        header.appendChild(titleSpan);
+        header.appendChild(hdrActions);
+        section.appendChild(header);
+
+        // --- todo items ---
+        const ul = document.createElement('ul');
+        ul.className = 'cat-todo-list';
+        ul.dataset.catId = cat.id;
+
+        catTodos.forEach(todo => {
+          ul.appendChild(buildTodoItem(todo, cat, animateCompletedId));
         });
 
-        const todoContent = document.createElement('div');
-        todoContent.className = 'todo-content';
-
-        if (editingId === todo.id) {
-          const editTextarea = document.createElement('textarea');
-          editTextarea.className = 'todo-edit-textarea';
-          editTextarea.value = todo.text;
-
-          const actions = document.createElement('div');
-          actions.className = 'todo-actions';
-
-          const saveBtn = document.createElement('button');
-          saveBtn.className = 'icon-btn';
-          saveBtn.innerHTML = '<i class="codicon codicon-save"></i>';
-          saveBtn.title = 'Save';
-          saveBtn.onclick = () => {
-            const newText = editTextarea.value.trim();
-            if (newText) {
-              vscode.postMessage({ type: 'editTodo', id: todo.id, text: newText });
-              editingId = null;
-            }
-          };
-
-          const cancelBtn = document.createElement('button');
-          cancelBtn.className = 'icon-btn';
-          cancelBtn.innerHTML = '<i class="codicon codicon-close"></i>';
-          cancelBtn.title = 'Cancel';
-          cancelBtn.onclick = () => {
-            editingId = null;
-            renderTodos(todos);
-          };
-
-          actions.appendChild(saveBtn);
-          actions.appendChild(cancelBtn);
-
-          todoContent.appendChild(editTextarea);
-          li.append(dragHandle, checkbox, todoContent, actions);
-        } else {
-          const span = document.createElement('span');
-          span.className = 'todo-text' + (todo.completed ? ' completed' : '');
-          span.textContent = todo.text;
-          span.style.whiteSpace = 'pre-wrap';
-          span.style.wordBreak = 'break-word';
-
-          // Add creation date
-          const dateSpan = document.createElement('div');
-          dateSpan.className = 'todo-date';
-          const createdDate = todo.createdAt ? new Date(todo.createdAt).toISOString().split('T')[0] : '';
-          dateSpan.textContent = createdDate;
-
-          const actions = document.createElement('div');
-          actions.className = 'todo-actions';
-
-          const editBtn = document.createElement('button');
-          editBtn.className = 'icon-btn';
-          editBtn.innerHTML = '<i class="codicon codicon-edit"></i>';
-          editBtn.title = 'Edit';
-          editBtn.onclick = () => {
-            editingId = todo.id;
-            renderTodos(todos);
-          };
-
-          const deleteBtn = document.createElement('button');
-          deleteBtn.className = 'icon-btn';
-          deleteBtn.innerHTML = '<i class="codicon codicon-trash"></i>';
-          deleteBtn.title = 'Delete';
-          deleteBtn.onclick = () => {
-            vscode.postMessage({ type: 'deleteTodo', id: todo.id });
-          };
-
-          actions.appendChild(editBtn);
-          actions.appendChild(deleteBtn);
-
-          todoContent.appendChild(span);
-          todoContent.appendChild(dateSpan);
-          li.append(dragHandle, checkbox, todoContent, actions);
-        }
-
-        todoList.appendChild(li);
+        section.appendChild(ul);
+        todoSections.appendChild(section);
       });
+
+      // Re-attach drag-and-drop listeners to every list
+      todoSections.querySelectorAll('.cat-todo-list').forEach(attachDragDrop);
     }
 
+    // ==========================================
+    // BUILD A SINGLE TODO LI
+    // ==========================================
+    function buildTodoItem(todo, cat, animateCompletedId) {
+      const li = document.createElement('li');
+      li.className = 'todo-item';
+      li.draggable = true;
+      li.dataset.id = todo.id;
+
+      // Background = category color at low opacity
+      li.style.backgroundColor = hexToRgba(cat.color, 0.10);
+      li.style.borderColor = hexToRgba(cat.color, 0.25);
+
+      if (animateCompletedId === todo.id && todo.completed) {
+        li.classList.add('moving-down');
+        setTimeout(() => li.classList.remove('moving-down'), 500);
+      }
+
+      const dragHandle = document.createElement('span');
+      dragHandle.innerHTML = '<i class="codicon codicon-kebab-vertical"></i>';
+      dragHandle.className = 'drag-handle';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.checked = todo.completed;
+      checkbox.style.cssText = 'flex-shrink:0; accent-color:' + cat.color;
+      checkbox.addEventListener('change', () => {
+        lastToggledId = todo.id;
+        vscode.postMessage({ type: 'toggleTodo', id: todo.id });
+      });
+
+      const todoContent = document.createElement('div');
+      todoContent.className = 'todo-content';
+
+      if (editingId === todo.id) {
+        // ── Edit mode ──
+        const editTextarea = document.createElement('textarea');
+        editTextarea.className = 'todo-edit-textarea';
+        editTextarea.value = todo.text;
+
+        const editCatSelect = document.createElement('select');
+        editCatSelect.className = 'edit-cat-select';
+        editCatSelect.innerHTML = categories.map(c =>
+          `<option value="${c.id}" ${c.id === todo.category ? 'selected' : ''}>${c.name}</option>`
+        ).join('');
+
+        const actions = document.createElement('div');
+        actions.className = 'todo-actions';
+        actions.style.opacity = '1'; // always visible in edit mode
+
+        const saveBtn = document.createElement('button');
+        saveBtn.className = 'icon-btn';
+        saveBtn.innerHTML = '<i class="codicon codicon-save"></i>';
+        saveBtn.title = 'Save';
+        saveBtn.onclick = () => {
+          const newText = editTextarea.value.trim();
+          if (newText) {
+            vscode.postMessage({
+              type: 'editTodo',
+              id: todo.id,
+              text: newText,
+              category: editCatSelect.value,
+            });
+            editingId = null;
+          }
+        };
+
+        const cancelBtn = document.createElement('button');
+        cancelBtn.className = 'icon-btn';
+        cancelBtn.innerHTML = '<i class="codicon codicon-close"></i>';
+        cancelBtn.title = 'Cancel';
+        cancelBtn.onclick = () => { editingId = null; renderSections(); };
+
+        actions.appendChild(saveBtn);
+        actions.appendChild(cancelBtn);
+        todoContent.appendChild(editTextarea);
+        todoContent.appendChild(editCatSelect);
+        li.append(dragHandle, checkbox, todoContent, actions);
+
+      } else {
+
+        const span = document.createElement('span');
+        span.className = 'todo-text' + (todo.completed ? ' completed' : '');
+        span.textContent = todo.text;
+
+        const dateSpan = document.createElement('span');
+        dateSpan.className = 'todo-date';
+        dateSpan.textContent = todo.createdAt
+          ? new Date(todo.createdAt).toISOString().split('T')[0]
+          : '';
+
+
+        const actions = document.createElement('div');
+        actions.className = 'todo-actions';
+
+        const editBtn = document.createElement('button');
+        editBtn.className = 'icon-btn';
+        editBtn.innerHTML = '<i class="codicon codicon-edit"></i>';
+        editBtn.title = 'Edit';
+        editBtn.onclick = () => { editingId = todo.id; renderSections(); };
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'icon-btn';
+        deleteBtn.innerHTML = '<i class="codicon codicon-trash"></i>';
+        deleteBtn.title = 'Delete';
+        deleteBtn.onclick = () => {
+          vscode.postMessage({ type: 'deleteTodo', id: todo.id });
+        };
+
+        actions.appendChild(editBtn);
+        actions.appendChild(deleteBtn);
+        todoContent.appendChild(span);
+        todoContent.appendChild(dateSpan);
+        li.append(dragHandle, checkbox, todoContent, actions);
+      }
+
+      return li;
+    }
+
+    // ==========================================
+    // ADD TODO
+    // ==========================================
     addBtn.addEventListener('click', () => {
       const text = todoInput.value.trim();
-      if (!text) return;
-      vscode.postMessage({ type: 'addTodo', text });
+      if (!text) { return; }
+      const category = todoCategorySelect.value || 'personal';
+      vscode.postMessage({ type: 'addTodo', text, category });
       todoInput.value = '';
     });
 
     todoInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') addBtn.click();
+      if (e.key === 'Enter') { addBtn.click(); }
     });
 
     // ==========================================
-    // DRAG AND DROP FUNCTIONALITY
+    // BUTTONS
+    // ==========================================
+    exportBtn.addEventListener('click', () => {
+      vscode.postMessage({ type: 'exportTodos', categoryId: 'all' });
+    });
+
+    newCatBtn.addEventListener('click', () => {
+      vscode.postMessage({ type: 'addCategory' });
+    });
+
+    // ==========================================
+    // DRAG AND DROP — per category list
     // ==========================================
     let draggedElement = null;
+    let draggedTodoId = null;
 
-    todoList.addEventListener('dragstart', (e) => {
-      if (e.target.classList.contains('todo-item')) {
-        draggedElement = e.target;
-        e.target.classList.add('dragging');
-      }
-    });
-
-    todoList.addEventListener('dragend', (e) => {
-      if (e.target.classList.contains('todo-item')) {
-        e.target.classList.remove('dragging');
-        draggedElement = null;
-      }
-    });
-
-    todoList.addEventListener('dragover', (e) => {
-      e.preventDefault();
-      const afterElement = getDragAfterElement(todoList, e.clientY);
-      if (draggedElement) {
-        if (afterElement == null) {
-          todoList.appendChild(draggedElement);
-        } else {
-          todoList.insertBefore(draggedElement, afterElement);
+    function attachDragDrop(ul) {
+      ul.addEventListener('dragstart', (e) => {
+        const item = e.target.closest('.todo-item');
+        if (item) {
+          draggedElement = item;
+          draggedTodoId = item.dataset.id;
+          item.classList.add('dragging');
         }
-      }
-    });
+      });
 
-    todoList.addEventListener('drop', (e) => {
-      e.preventDefault();
-      // Get the new order of todos based on DOM
-      const todoItems = Array.from(todoList.querySelectorAll('.todo-item'));
-      const reorderedTodos = todoItems.map(item => {
-        const id = item.dataset.id;
-        return todos.find(t => t.id === id);
-      }).filter(Boolean);
+      ul.addEventListener('dragend', (e) => {
+        const item = e.target.closest('.todo-item');
+        if (item) { item.classList.remove('dragging'); }
+        draggedElement = null;
+      });
 
-      vscode.postMessage({ type: 'reorderTodos', todos: reorderedTodos });
-    });
+      ul.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        if (!draggedElement) { return; }
+        const after = getDragAfterElement(ul, e.clientY);
+        after == null ? ul.appendChild(draggedElement) : ul.insertBefore(draggedElement, after);
+      });
+
+      ul.addEventListener('drop', (e) => {
+        e.preventDefault();
+        if (!draggedTodoId) { return; }
+
+        // Build new global order: walk all sections in DOM order
+        const allLis = Array.from(todoSections.querySelectorAll('.todo-item'));
+        const reordered = allLis
+          .map(li => todos.find(t => t.id === li.dataset.id))
+          .filter(Boolean);
+
+        vscode.postMessage({ type: 'reorderTodos', todos: reordered });
+        draggedTodoId = null;
+      });
+    }
 
     function getDragAfterElement(container, y) {
-      const draggableElements = [...container.querySelectorAll('.todo-item:not(.dragging)')];
-
-      return draggableElements.reduce((closest, child) => {
+      const items = [...container.querySelectorAll('.todo-item:not(.dragging)')];
+      return items.reduce((closest, child) => {
         const box = child.getBoundingClientRect();
         const offset = y - box.top - box.height / 2;
-
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
+        return (offset < 0 && offset > closest.offset)
+          ? { offset, element: child }
+          : closest;
       }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    // ==========================================
+    // UTILITY
+    // ==========================================
+    function hexToRgba(hex, alpha) {
+      const h = hex.replace('#', '');
+      const r = parseInt(h.substring(0, 2), 16);
+      const g = parseInt(h.substring(2, 4), 16);
+      const b = parseInt(h.substring(4, 6), 16);
+      return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
   </script>
 </body>

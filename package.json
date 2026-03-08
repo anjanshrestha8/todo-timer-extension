@@ -28,6 +28,16 @@
         "command": "timer-todo.openTodo",
         "title": "Open Todo List",
         "category": "Timer & Todo"
+      },
+      {
+        "command": "timer-todo.exportTodos",
+        "title": "Export Todos",
+        "category": "Timer & Todo"
+      },
+      {
+        "command": "timer-todo.importTodos",
+        "title": "Import Todos",
+        "category": "Timer & Todo"
       }
     ],
     "viewsContainers": {
